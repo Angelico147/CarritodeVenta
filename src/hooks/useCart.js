@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { db } from '../data/db'
 
 export const useCart = () => {
@@ -37,10 +37,10 @@ export const useCart = () => {
     function decreaseQuantity(id) {
         const updatedCart = cart.map( item => {
             if(item.id === id && item.quantity > MIN_ITEMS) {
-            return {
-                ...item,
-                quantity: item.quantity - 1
-            }
+                return {
+                    ...item,
+                    quantity: item.quantity - 1
+                }
             }
             return item
         })
@@ -50,10 +50,10 @@ export const useCart = () => {
     function increaseQuantity(id) {
         const updatedCart = cart.map( item => {
             if(item.id === id && item.quantity < MAX_ITEMS) {
-            return {
-                ...item,
-                quantity: item.quantity + 1
-            }
+                return {
+                    ...item,
+                    quantity: item.quantity + 1
+                }
             }
             return item
         })
@@ -64,6 +64,10 @@ export const useCart = () => {
         setCart([])
     }
 
+    // State Derivado
+    const isEmpty = useMemo( () => cart.length === 0, [cart])
+    const cartTotal = useMemo( () => cart.reduce( (total, item ) => total + (item.quantity * item.price), 0), [cart] )
+
     return {
         data,
         cart,
@@ -71,6 +75,8 @@ export const useCart = () => {
         removeFromCart,
         decreaseQuantity,
         increaseQuantity,
-        clearCart
+        clearCart,
+        isEmpty,
+        cartTotal
     }
 }
