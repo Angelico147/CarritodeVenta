@@ -18,7 +18,7 @@ export default function Header({cart, removeFromCart, decreaseQuantity, increase
                         >
                             <img 
                                 className="img-fluid" 
-                                src={`${import.meta.env.BASE_URL}public/img/carrito.jpg`} 
+                                src={`${import.meta.env.BASE_URL}public/img/carrito.png`} 
                                 alt="imagen carrito" 
                             />
 
